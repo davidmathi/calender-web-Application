@@ -11,37 +11,75 @@
         <% include ../partials/header %>
     </header>
 
+
+
     <main>
         <div class="jumbotron">
-            <h2>Welcome</h2>  <%=  userName %>
-            <p>
-            <%= userEmail %>
-          </p>
-          <div id="time-range">
-              <p>Time Range: <span class="slider-time">10:00 AM</span> - <span class="slider-time2">12:00 PM</span>
-
-              </p>
-              <div class="sliders_step1">
-                  <div id="slider-range"></div>
-              </div>
-          </div>
 
 
-            <form action='/' method='post'>
-            <input type="text" name="task">
-          <input type="text" name="dateAssigned" id="datepicker-1">
-          <input type="text" name="timeAssigned" id="slider-range">
+           <h2>Welcome <%=  userName %></h2>
+           <form action='/' method='post'>
+            <input type="text" name="task"> <br /> <br />
+          <input type="text" name="dateAssigned" id="datepicker-1"><br /> <br />
+          <input type="time" name="timeAssigned">
+          <br /> <br />
           <input type="hidden" name="givenName" value= <%=  userName %> >
            <input type="hidden" name="userEmail" value= <%=  userEmail %> >
            <input type='submit', value='Submit'>
             </form>
 
+
+
         </div>
     </main>
+
+
+
+    <div id="users">
+  <button class="sort" data-sort="dateAssigned">
+    Sort by name
+  </button>
+
+  <ul class="list">
+    <% scheduleList.forEach(function(peep){ %>
+      <li>
+          <h3 class="name"><%= peep.task %></h3>
+          <p class="born"><%= peep.dateAssigned %></p>
+          <p class="born"><%= peep.timeAssigned %></p>
+      </li>
+
+    <% }); %>
+
+
+  </ul>
+
+</div>
+<script>
+var options = {
+  valueNames: [ 'name', 'born' ]
+};
+
+var userList = new List('users', options);
+</script>
+<script src='js/fancyInput.js'></script>
+<script src="http://listjs.com/assets/javascripts/list.min.js"></script>
 
     <footer>
         <% include ../partials/footer %>
     </footer>
+    <script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="js/rangeSlider.js" ></script>
+    <script src="js/bootstrap.js" ></script>
+    <script src="js/bootstrap.min.js" ></script>
+    <script src="js/npm.js" ></script>
+    <!-- Javascript -->
+    <script>
+    $(function() {
+      $( "#datepicker-1" ).datepicker();
+    });
+    </script>
 
 </body>
 </html>

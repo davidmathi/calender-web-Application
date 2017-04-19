@@ -44,6 +44,11 @@ app.use(stormpath.init(app, {
  secretKey: 'YKfx8YB50wgyJladZMXIy13tHtlq194W9IJn8BW5lvs',
   expand: {
     customData: true
+  },
+  logout: {
+    enabled: true,
+    uri: '/log-me-out',
+    nextUri: '/'
   }
 }));
 
@@ -57,8 +62,13 @@ app.get('/', stormpath.getUser, function(req, res) {
   Appointment.find({'email':req.user.email}, function (err, people) {
     if (err) {
         console.log("Error 500")
+        res.render('pages/index', {
+          title: 'Welcome',
+          userName:req.user.givenName,
+          userEmail:req.user.email,
+
+        });
     } else {
-        console.log(people)
 
 
   res.render('pages/index', {
@@ -76,9 +86,11 @@ app.get('/', stormpath.getUser, function(req, res) {
 });
 
 
+
 app.post('/',function(req,res,next){
+  console.log(req.body)
   var date = new Date();
-  var current_hour = date.getHours();
+  var current_hour = Date.now();
   var userInfo = new Appointment({
   email: req.body.userEmail,
   dateBooked: current_hour,
@@ -93,11 +105,28 @@ userInfo.save(function(err) {
   console.log('User Info saved successfully!');
 
 });
+Appointment.find({'email':req.body.userEmail}, function (err, people) {
+  if (err) {
+      console.log("Error 500")
+      res.render('pages/index', {
+        title: 'Welcome',
+        userName:req.body.givenName,
+        userEmail:req.body.userEmail,
+
+      });
+  } else {
+      console.log(people)
+
+
 res.render('pages/index', {
   title: 'Welcome',
   userName:req.body.givenName,
-  userEmail:req.body.userEmail
+  userEmail:req.body.userEmail,
+  scheduleList:people
 
+});
+
+}
 });
 
 })
