@@ -1,0 +1,47 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h2>Welcome</h2>  <%=  userName %>
+            <p>
+            <%= userEmail %>
+          </p>
+          <div id="time-range">
+              <p>Time Range: <span class="slider-time">10:00 AM</span> - <span class="slider-time2">12:00 PM</span>
+
+              </p>
+              <div class="sliders_step1">
+                  <div id="slider-range"></div>
+              </div>
+          </div>
+
+
+            <form action='/' method='post'>
+            <input type="text" name="task">
+          <input type="text" name="dateAssigned" id="datepicker-1">
+          <input type="text" name="timeAssigned" id="slider-range">
+          <input type="hidden" name="givenName" value= <%=  userName %> >
+           <input type="hidden" name="userEmail" value= <%=  userEmail %> >
+           <input type='submit', value='Submit'>
+            </form>
+
+        </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+
+</body>
+</html>
